@@ -1,10 +1,9 @@
-<!-- Navbar -->
 <nav class="navbar">
   <div class="navbar-brand">Reimbursement Portal</div>
 </nav>
 
-<!-- Main Content -->
 <div class="main-container">
+  <!-- Form Section -->
   <div class="form-container">
     <h2>Submit Your Reimbursement</h2>
 
@@ -31,5 +30,31 @@
 
       <button type="submit" class="submit-btn">Submit Reimbursement</button>
     </form>
+  </div>
+
+  <!-- Table Section -->
+  <div class="table-container">
+    <h2>All Reimbursements</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Amount</th>
+          <th>Description</th>
+          <th>Receipt</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of reimbursements">
+          <td>{{ item.date | date }}</td>
+          <td>{{ item.amount }}</td>
+          <td>{{ item.description }}</td>
+          <td>
+            <img *ngIf="isImage(item.receiptFileName)" [src]="'http://localhost:5217/uploads/' + item.receiptFileName" alt="Receipt" width="100">
+            <a *ngIf="!isImage(item.receiptFileName)" [href]="'http://localhost:5217/uploads/' + item.receiptFileName" target="_blank">Download</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
