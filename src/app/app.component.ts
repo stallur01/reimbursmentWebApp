@@ -28,18 +28,19 @@ export class AppComponent implements OnInit {
 
   onSubmit(event: Event) {
     event.preventDefault();
-
-    if (!this.selectedFile) {
-      alert('Please select a file');
+  
+    // Basic validation
+    if (!this.reimbursement.date || !this.reimbursement.amount || !this.reimbursement.description || !this.selectedFile) {
+      alert('All fields are mandatory.');
       return;
     }
-
+  
     const formData = new FormData();
     formData.append('date', this.reimbursement.date);
     formData.append('amount', this.reimbursement.amount || '');
     formData.append('description', this.reimbursement.description);
     formData.append('receipt', this.selectedFile);
-
+  
     this.http.post('http://localhost:5217/api/reimbursement', formData).subscribe({
       next: response => {
         alert('Reimbursement submitted successfully!');
@@ -52,6 +53,7 @@ export class AppComponent implements OnInit {
       }
     });
   }
+  
 
   isImage(fileName: string): boolean {
     const ext = fileName.split('.').pop()?.toLowerCase();
